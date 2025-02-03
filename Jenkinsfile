@@ -6,7 +6,7 @@ pipeline {
         DOCKER_TAG = "latest"            // Tag image
         DOCKER_REGISTRY = "dika007"    // Jika menggunakan Docker Hub
         K8S_DEPLOYMENT_NAME = "helloworld-app-deployment" // Nama deployment di Kubernetes
-        K8S_NAMESPACE = "default"        // Namespace Kubernetes (default jika tidak menggunakan namespace lain)
+        K8S_NAMESPACE = "default"        // Namespace Kubernetes 
         GIT_REPO_URL = "https://github.com/dikakurnia07/helloworld.git"
     }
 
@@ -44,6 +44,7 @@ pipeline {
             steps {
                 script {
                     // Update deployment di Kubernetes untuk menggunakan image terbaru
+                    bat 'kubectl config set-context docker-desktop --cluster=docker-desktop --user=docker-desktop --namespace=%K8S_NAMESPACE%'
                     bat 'kubectl config use-context docker-desktop'
                     bat 'kubectl set image deployment/%K8S_DEPLOYMENT_NAME% helloworld-app=%DOCKER_REGISTRY%/%DOCKER_IMAGE%:%DOCKER_TAG% -n %K8S_NAMESPACE%'
                 }
