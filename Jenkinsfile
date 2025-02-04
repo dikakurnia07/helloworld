@@ -47,6 +47,7 @@ pipeline {
                     bat 'kubectl config set-context docker-desktop --cluster=docker-desktop --user=docker-desktop --namespace=%K8S_NAMESPACE%'
                     bat 'kubectl config use-context docker-desktop'
                     // bat 'kubectl set image deployment/%K8S_DEPLOYMENT_NAME% helloworld-app=%DOCKER_REGISTRY%/%DOCKER_IMAGE%:%DOCKER_TAG% -n %K8S_NAMESPACE%'
+                    bat 'set image deployment/%K8S_DEPLOYMENT_NAME% helloworld-app=%DOCKER_REGISTRY%/%DOCKER_IMAGE%:%DOCKER_TAG% --record'
                     bat 'kubectl rollout restart deployment/%K8S_DEPLOYMENT_NAME% -n %K8S_NAMESPACE%'
                     bat 'kubectl rollout status deployment/%K8S_DEPLOYMENT_NAME% -n %K8S_NAMESPACE%'
                     
